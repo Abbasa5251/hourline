@@ -192,6 +192,9 @@ to check the store build on real phones.
 
 ## 9. Releasing updates
 
+Write the release's notes in [`release-notes.md`](./release-notes.md) first. Then paste the Google Play block into
+the release in Play Console.
+
 ```bash
 # 1. bump "version" in app.json (e.g. 1.0.0 → 1.0.1)
 # 2. make sure the timeanddate cross-check still passes
