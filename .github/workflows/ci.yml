@@ -1,0 +1,41 @@
+# Lint, typecheck and tests on every pull request (required to merge into master) and on pushes to master.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# Read-only token: PRs from forks run untrusted code, so this workflow must not be able to write anything.
+permissions:
+  contents: read
+
+# A new push to the same PR cancels the run still going for the previous one.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Lint, typecheck, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npx expo lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      # Includes the timeanddate.com cross-check (src/lib/tz-timeanddate.test.ts).
+      - name: Test
+        run: npx jest --ci
