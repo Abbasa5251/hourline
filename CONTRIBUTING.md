@@ -45,8 +45,9 @@ Hourline uses native modules, so it needs a **development build**, not Expo Go. 
 4. Try it on a device or emulator, in light and dark mode. Attach before/after screenshots for UI changes.
 5. Open a **pull request into `master`**. Describe what changed, why, and how you tested it.
 
-`master` is protected: every change goes through a pull request with one approving review, and direct pushes or
-force-pushes are blocked.
+`master` is protected. Every change goes through a pull request with one approving review, and direct pushes or
+force-pushes are blocked. GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs the same lint,
+typecheck and tests on every PR, and the PR can only be merged when that check passes.
 
 ## Project rules
 
