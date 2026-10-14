@@ -1,56 +1,123 @@
-# Welcome to your Expo app 👋
+<p align="center">
+  <img src="marketing/play/feature-graphic.png" alt="Hourline: every time zone, any moment" width="720">
+</p>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<h1 align="center">Hourline</h1>
 
-## Get started
+<p align="center">
+  A world clock and time zone converter for Android that gets daylight saving right, every time.
+</p>
 
-1. Install dependencies
+<p align="center">
+  <a href="https://hourline.adevtutorials.in/#beta"><b>👉 Join the closed beta on Google Play</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://hourline.adevtutorials.in">Website</a>
+  &nbsp;·&nbsp;
+  <a href="https://hourline.adevtutorials.in/privacy">Privacy policy</a>
+</p>
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## Join the beta
 
-   ```bash
-   npx expo start
-   ```
+Hourline is in **closed testing on Google Play**. Joining takes about two minutes:
 
-In the output, you'll find options to open the app in a
+1. Go to **[hourline.adevtutorials.in/#beta](https://hourline.adevtutorials.in/#beta)**.
+2. Join the tester group with the Google account you use in Google Play.
+3. Tap *Become a tester*, then install Hourline from Google Play.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Please keep it installed for at least 14 days. Google requires that before the app can go public.
+Send feedback to **hello@adevtutorials.in**.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Screenshots
 
-## Get a fresh project
+<table>
+  <tr>
+    <td><img src="marketing/play/phone-1-home.png" alt="Home: every city at a glance" width="200"></td>
+    <td><img src="marketing/play/phone-2-time-travel.png" alt="Time travel with the dial and week strip" width="200"></td>
+    <td><img src="marketing/play/phone-3-compare.png" alt="Compare: find the hour that works" width="200"></td>
+    <td><img src="marketing/play/phone-4-convert.png" alt="Convert any time, including UTC" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="marketing/play/phone-5-clock-changes.png" alt="Clock-change alerts" width="200"></td>
+    <td><img src="marketing/play/phone-6-dark.png" alt="Dark mode" width="200"></td>
+    <td><img src="marketing/play/phone-7-setup.png" alt="Quick setup" width="200"></td>
+    <td></td>
+  </tr>
+</table>
 
-When you're ready, run:
+These are real screenshots from the app. See [`marketing/README.md`](marketing/README.md) for how they're made.
 
-```bash
-npm run reset-project
+## Features
+
+- **Every city at a glance:** the time, how far ahead or behind, and who is on daylight saving, with real zone names (BST, AEDT…).
+- **Time travel:** drag the dial in 15-minute steps, or swipe the week strip to any date in the past or future. When clocks change in between, Hourline says so ("GMT · DST ended").
+- **Compare:** an hour grid of work, free and sleep hours for every city, with the best meeting overlap picked for you.
+- **Convert:** pick a date and time in one city and see it everywhere, including UTC. You're warned about times skipped when clocks spring forward.
+- **Clock-change alerts:** shown when a change is coming within 30 days, with the new gap between your cities.
+- **Accurate everywhere:** the app ships its own time zone rules, so every phone gives the same answer.
+- **Private:** no account, no ads, no tracking. Everything stays on your phone.
+- Light and dark themes, a 12/24-hour clock, haptic feedback, 2,200+ cities searchable offline.
+
+## How accuracy is checked
+
+- **Bundled rules:** time zone rules come from IANA tzdb **2026e**, via the FormatJS `Intl.DateTimeFormat` polyfill ([`src/lib/intl.ts`](src/lib/intl.ts)). The phone's own, possibly outdated, rules are never used.
+- **timeanddate.com cross-check:** [`src/lib/tz-timeanddate.test.ts`](src/lib/tz-timeanddate.test.ts) compares the engine with **240 conversions and 19 clock changes** captured from timeanddate.com. Known differences are documented in the test.
+- **On-device self-check:** dev builds have one under *Settings → Run time-zone self-check*.
+
+## Tech stack
+
+- [Expo](https://expo.dev) SDK 57 (React Native, Hermes, New Architecture), with [Expo Router](https://docs.expo.dev/router/introduction/)
+- [Luxon](https://moment.github.io/luxon/) for time zone maths, in [`src/lib/tz.ts`](src/lib/tz.ts)
+- `react-native-gesture-handler`, `react-native-svg`, `expo-haptics`, `expo-localization`, AsyncStorage
+- Jest (`jest-expo`) for tests
+- EAS Build for signed release builds
+- The website is static HTML on Vercel
+
+## Project structure
+
+```
+src/app/            screens (Expo Router): onboarding, (tabs)/ home·compare·convert·settings, add-city modal
+src/components/     dial, week strip, city row, pill tab bar, haptic Pressable, …
+src/lib/            time zone engine, abbreviations, cities, compare logic, haptics, tests
+src/state/          app state (AsyncStorage)
+src/data/           cities.json (generated from GeoNames by scripts/build-cities.mjs)
+plugins/            config plugin for release signing
+site/               hourline.adevtutorials.in (landing page, beta signup, privacy policy)
+marketing/          raw screenshots and Google Play graphics
+docs/               publishing guide, release notes, privacy policy
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Development
 
-### Other setup steps
+```bash
+npm install
+npm run android          # build and install the development build on an emulator/device
+npx expo start --dev-client
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Before committing, run:
 
-## Learn more
+```bash
+npx expo lint
+npx tsc --noEmit
+npm test                 # includes the timeanddate.com cross-check
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+`android/` and `ios/` are generated by `expo prebuild` and are not committed. Configure native behaviour in
+`app.json` and `plugins/`.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Releasing
 
-## Join the community
+Production builds are signed AABs built with EAS:
 
-Join our community of developers creating universal apps.
+```bash
+npx eas-cli@latest build --platform android --profile production
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [`docs/google-play-publishing.md`](docs/google-play-publishing.md): step-by-step Google Play guide (store listing, closed testing, uploads).
+- [`docs/release-notes.md`](docs/release-notes.md): release notes for each version.
+
+## Privacy
+
+Hourline collects no data. See the [privacy policy](https://hourline.adevtutorials.in/privacy).
