@@ -27,7 +27,10 @@ import { eyebrow, fonts, palette, useTheme } from '@/theme';
 
 const clockText = (c: { time: string; period: string }) => (c.period ? `${c.time} ${c.period}` : c.time);
 
-/** Next clock change for either city, phrased for the DST card. */
+// Only warn about clock changes that are close enough to matter; further out, the card is hidden.
+const NOTICE_DAYS = 30;
+
+/** Next clock change for either city within NOTICE_DAYS, phrased for the DST card; null when there is none. */
 function dstNotice(from: City, to: City, inst: number, h24: boolean) {
   if (from.id === to.id)
     return {
@@ -35,15 +38,10 @@ function dstNotice(from: City, to: City, inst: number, h24: boolean) {
       body: 'Pick two different cities to compare.',
     };
   const next = [from, to]
-    .map((c) => ({ c, ch: nextTransition(c.tz, inst) }))
+    .map((c) => ({ c, ch: nextTransition(c.tz, inst, NOTICE_DAYS) }))
     .filter((x) => x.ch)
     .sort((a, b) => a.ch!.at - b.ch!.at)[0];
-  if (!next) {
-    return {
-      title: 'No clock changes ahead',
-      body: `Neither ${from.name} nor ${to.name} changes its clocks in the next 4 months.`,
-    };
-  }
+  if (!next) return null;
   const { c, ch } = next as { c: City; ch: { at: number; delta: number } };
   const hrs = Math.abs(ch.delta) / 60;
   const after = offsetMinutes(to.tz, ch.at) - offsetMinutes(from.tz, ch.at);
@@ -168,13 +166,15 @@ export default function Convert() {
           })}
         </View>
 
-        <View style={styles.dstCard}>
-          <AlarmIcon color={palette.ink} />
-          <View style={{ flex: 1, gap: 3 }}>
-            <Text style={styles.dstTitle}>{dst.title}</Text>
-            <Text style={styles.dstBody}>{dst.body}</Text>
+        {dst && (
+          <View style={styles.dstCard}>
+            <AlarmIcon color={palette.ink} />
+            <View style={{ flex: 1, gap: 3 }}>
+              <Text style={styles.dstTitle}>{dst.title}</Text>
+              <Text style={styles.dstBody}>{dst.body}</Text>
+            </View>
           </View>
-        </View>
+        )}
       </ScrollView>
       {picker.element}
     </SafeAreaView>

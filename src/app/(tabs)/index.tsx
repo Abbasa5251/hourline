@@ -52,7 +52,7 @@ export default function Home() {
         </Pressable>
       </View>
 
-      <WeekStrip tz={home.tz} at={at} onPick={pickDay} />
+      <WeekStrip key={home.tz} tz={home.tz} at={at} onPick={pickDay} />
 
       <FlatList
         style={{ flex: 1 }}
