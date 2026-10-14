@@ -7,9 +7,38 @@ Newest first. Each release has:
 
 ---
 
+## 1.1.1 (versionCode 7) · 14 October 2026
+
+Closed testing build. AAB: `build-output/hourline-1.1.1.aab` (not committed).
+
+### Google Play notes
+
+If this is the first build your testers get, use the welcome note from 1.1.0 below. Otherwise use this one:
+
+```
+<en-US>
+• Credits for the city data (GeoNames) and time zone rules (IANA) at the bottom of Settings
+• Hourline is now open source: github.com/Abbasa5251/hourline
+
+Thanks for testing! Feedback: hello@adevtutorials.in
+</en-US>
+```
+
+### Changes since 1.1.0
+
+**New**
+- Settings shows credits for GeoNames (CC BY 4.0, required by its licence) and the IANA Time Zone Database, with links.
+
+**Project**
+- Open source under the MIT License, with a contributing guide.
+- GitHub Actions runs lint, typecheck and tests on every pull request. `master` only accepts reviewed PRs that pass them.
+
+---
+
 ## 1.1.0 (versionCode 6) · 14 October 2026
 
-First build sent to closed testing on Google Play. AAB: `build-output/hourline-1.1.0.aab` (not committed).
+Built for closed testing and replaced by 1.1.1. Upload 1.1.1 instead if 1.1.0 was never uploaded.
+AAB: `build-output/hourline-1.1.0.aab` (not committed).
 
 ### Google Play notes
 
