@@ -1,3 +1,4 @@
+import * as Linking from 'expo-linking';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -6,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon, PlusIcon } from '@/components/icons';
 import { Pressable } from '@/components/pressable';
 import { Button, Segmented } from '@/components/ui';
+import { tap } from '@/lib/haptics';
 import { useApp, type Prefs } from '@/state/app-state';
 import { eyebrow, fonts, useTheme } from '@/theme';
 
@@ -83,8 +85,30 @@ export default function Settings() {
         <View style={{ height: 24 }} />
         <Button variant="text" label="Replay onboarding" onPress={replayOnboarding} />
         {__DEV__ ? <Button variant="text" label="Run time-zone self-check" onPress={() => router.push('/dev-tz-check')} /> : null}
+
+        {/* GeoNames' CC BY 4.0 licence requires crediting it wherever the city data ships, i.e. in the app. */}
+        <Text style={[styles.credits, { color: t.muted }]}>
+          City data ©{' '}
+          <ExternalLink url="https://www.geonames.org/" color={t.muted}>GeoNames</ExternalLink>,{' '}
+          <ExternalLink url="https://creativecommons.org/licenses/by/4.0/" color={t.muted}>CC BY 4.0</ExternalLink>.
+          Time zone rules: IANA Time Zone Database.
+        </Text>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function ExternalLink({ url, color, children }: { url: string; color: string; children: string }) {
+  return (
+    <Text
+      accessibilityRole="link"
+      onPress={() => {
+        tap();
+        Linking.openURL(url);
+      }}
+      style={[styles.link, { color }]}>
+      {children}
+    </Text>
   );
 }
 
@@ -112,4 +136,6 @@ const styles = StyleSheet.create({
   cityRow: { minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 16, paddingRight: 6 },
   cityName: { fontFamily: fonts.bodyBold, fontSize: 15 },
   iconBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  credits: { fontFamily: fonts.body, fontSize: 12, lineHeight: 18, textAlign: 'center', marginTop: 20, paddingHorizontal: 12 },
+  link: { textDecorationLine: 'underline' },
 });
