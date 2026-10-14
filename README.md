@@ -14,6 +14,14 @@
   <a href="https://hourline.adevtutorials.in">Website</a>
   &nbsp;·&nbsp;
   <a href="https://hourline.adevtutorials.in/privacy">Privacy policy</a>
+  &nbsp;·&nbsp;
+  <a href="CONTRIBUTING.md">Contributing</a>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-F7B955"></a>
+  <img alt="Platform: Android" src="https://img.shields.io/badge/platform-Android-12191A">
+  <img alt="Expo SDK 57" src="https://img.shields.io/badge/Expo-SDK%2057-12191A">
 </p>
 
 ---
@@ -118,6 +126,26 @@ npx eas-cli@latest build --platform android --profile production
 - [`docs/google-play-publishing.md`](docs/google-play-publishing.md): step-by-step Google Play guide (store listing, closed testing, uploads).
 - [`docs/release-notes.md`](docs/release-notes.md): release notes for each version.
 
+## Contributing
+
+Hourline is open source and contributions are welcome. Bug reports with the exact city, date and time are
+especially useful. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+`master` is protected, so every change goes through a reviewed PR.
+
 ## Privacy
 
 Hourline collects no data. See the [privacy policy](https://hourline.adevtutorials.in/privacy).
+
+## Credits
+
+- Time zone rules: [IANA Time Zone Database](https://www.iana.org/time-zones) (public domain), bundled through
+  [FormatJS](https://formatjs.github.io/) (MIT).
+- City data: [GeoNames](https://www.geonames.org/), licensed under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). `src/data/cities.json` is derived from it.
+- Fonts: [Bricolage Grotesque](https://github.com/ateliertriay/bricolage) and
+  [DM Sans](https://github.com/googlefonts/dm-fonts), under the [SIL Open Font License 1.1](https://openfontlicense.org/).
+- Reference data for the accuracy tests: [timeanddate.com](https://www.timeanddate.com/).
+
+## License
+
+[MIT](LICENSE) © 2026 Abbas Anandwala
