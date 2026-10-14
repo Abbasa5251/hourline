@@ -1,6 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Pressable } from '@/components/pressable';
 import { eyebrow, fonts, useTheme } from '@/theme';
 
 /** Full-width ink pill button (primary) or text button (secondary). */

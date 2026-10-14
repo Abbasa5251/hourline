@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import { Pressable } from '@/components/pressable';
+import { tick } from '@/lib/haptics';
 import { DAY, formatDate, parts, zonedToInstant, type Parts } from '@/lib/tz';
 import { eyebrow, fonts, useTheme } from '@/theme';
 
@@ -110,7 +112,11 @@ export function WeekStrip({ tz, at, onPick }: { tz: string; at: number; onPick: 
               const i = Math.round(e.nativeEvent.contentOffset.x / width);
               if (i !== shown) setShown(i);
             }}
-            onMomentumScrollEnd={(e) => (visible.current = Math.round(e.nativeEvent.contentOffset.x / width))}
+            onMomentumScrollEnd={(e) => {
+              const i = Math.round(e.nativeEvent.contentOffset.x / width);
+              if (i !== visible.current) tick();
+              visible.current = i;
+            }}
           />
         )}
       </View>

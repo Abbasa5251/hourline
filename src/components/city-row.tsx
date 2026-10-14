@@ -1,6 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
+import { Pressable } from '@/components/pressable';
 import type { City } from '@/lib/cities';
 import { dayDiff, dstInfo, formatClock, offsetMinutes, parts, relLabel, utcLabel, zoneAbbr } from '@/lib/tz';
 import { eyebrow, fonts, palette, useTheme } from '@/theme';

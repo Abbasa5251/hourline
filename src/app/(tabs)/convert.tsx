@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AlarmIcon, ChevronDownIcon, SwapVerticalIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { useWallPicker } from '@/components/wall-picker';
 import { SUGGESTED, type City } from '@/lib/cities';
 import {

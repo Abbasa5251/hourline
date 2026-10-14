@@ -1,9 +1,10 @@
-import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Circle, G, Line } from 'react-native-svg';
 
+import { Pressable } from '@/components/pressable';
+import { tick } from '@/lib/haptics';
 import { MIN } from '@/lib/tz';
 import { fonts, palette, useTheme } from '@/theme';
 
@@ -46,7 +47,7 @@ export function Dial({ shift, now, onChange, label, sublabel, valueText }: Props
       const next = snapTo((dragStart ?? shift) + Math.round(-e.translationX / PX_PER_STEP) * STEP_MIN);
       if (next === shift) return;
       onChange(next);
-      Haptics.selectionAsync();
+      tick();
     })
     .onFinalize(() => setDragStart(null));
 

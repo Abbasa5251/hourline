@@ -1,10 +1,11 @@
 import { router } from 'expo-router';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CityRow } from '@/components/city-row';
 import { Dial } from '@/components/dial';
 import { PlusIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { WeekStrip } from '@/components/week-strip';
 import { dstInfo, formatClock, formatDate, MIN, offsetMinutes, parts, utcLabel, zoneAbbr, zonedToInstant } from '@/lib/tz';
 import { useNow } from '@/lib/use-now';

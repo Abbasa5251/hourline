@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CalendarIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { useWallPicker } from '@/components/wall-picker';
 import { bestRun, dayColumns, kindOf, overlapScores, workCounts, type Kind } from '@/lib/compare';
 import { dayDiff, formatClock, formatDate, MIN, offsetMinutes, parts, zonedToInstant } from '@/lib/tz';

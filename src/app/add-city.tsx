@@ -1,9 +1,10 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CheckIcon, CloseIcon, SearchIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { searchCities, type City } from '@/lib/cities';
 import { formatClock, offsetMinutes, parts, relLabel } from '@/lib/tz';
 import { useNow } from '@/lib/use-now';

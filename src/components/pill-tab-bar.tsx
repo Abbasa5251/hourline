@@ -1,7 +1,8 @@
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { BarsIcon, ClockIcon, SlidersIcon, SwapIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { palette, useTheme } from '@/theme';
 
 const ICONS = { index: ClockIcon, compare: BarsIcon, convert: SwapIcon, settings: SlidersIcon };

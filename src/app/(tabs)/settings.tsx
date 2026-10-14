@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon, PlusIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { Button, Segmented } from '@/components/ui';
 import { useApp, type Prefs } from '@/state/app-state';
 import { eyebrow, fonts, useTheme } from '@/theme';

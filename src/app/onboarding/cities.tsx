@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CheckIcon, SearchIcon } from '@/components/icons';
+import { Pressable } from '@/components/pressable';
 import { Button, Segmented } from '@/components/ui';
 import { SUGGESTED } from '@/lib/cities';
 import { useApp } from '@/state/app-state';
