@@ -52,11 +52,19 @@
             "enableShrinkResourcesInReleaseBuilds": true
           }
         }
-      ]
+      ],
+      "./plugins/with-upload-signing"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "52c85220-4bd1-428d-8c88-44f2d13db182"
+      }
+    },
+    "owner": "adev-tutorials"
   }
 }

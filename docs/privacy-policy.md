@@ -33,4 +33,4 @@ If this policy changes, the new version will be published at this address with a
 
 ## Contact
 
-Questions about this policy: **[YOUR SUPPORT EMAIL]**
+Questions about this policy: **hello@adevtutorials.in**

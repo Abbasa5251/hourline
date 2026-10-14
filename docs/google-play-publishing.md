@@ -126,7 +126,7 @@ Answer each section — Play won't let you publish until all are complete:
 
 | Section | Answer for Hourline |
 |---|---|
-| **Privacy policy** | Host [`docs/privacy-policy.md`](./privacy-policy.md) at a public URL (GitHub Pages, Notion public page, your website) and paste the URL |
+| **Privacy policy** | `https://hourline.adevtutorials.in/privacy` (source: [`site/privacy/index.html`](../site/privacy/index.html); redeploy with `cd site && npx vercel deploy --prod`) |
 | **App access** | All functionality available without special access (no login) |
 | **Ads** | No, the app does not contain ads |
 | **Content rating** | Start questionnaire → category **Utility, Productivity, Communication, or Other** → answer **No** to every content question → rating will be *Everyone / PEGI 3* |
@@ -159,7 +159,7 @@ to check the store build on real phones.
 
 **Option A — upload by hand:** Play Console → the track → Create new release → drag in the `.aab`.
 
-**Option B — `eas submit`** (configured in `eas.json` to upload to the *internal* track as a draft):
+**Option B — `eas submit`** (configured in `eas.json` to upload to the *closed testing* track — `alpha` in the Play API — as a draft):
 
 1. Play Console → Setup → API access → create a **Google Cloud service account** with the *Release manager*
    permission, download its JSON key. Keep it **out of git**.
@@ -205,7 +205,7 @@ Later, setting up EAS Update would let these JS-only updates reach users without
 - [ ] `icon-512.png` — 512×512 PNG
 - [ ] `feature-graphic.png` — 1024×500, 24-bit PNG, no transparency ✔
 - [ ] 2–8 phone screenshots — we have 7 at 1080×1920 (9:16), 24-bit, no transparency ✔
-- [ ] Privacy policy URL hosted and reachable
+- [ ] Privacy policy URL reachable: https://hourline.adevtutorials.in/privacy
 - [ ] Short + full description pasted
 - [ ] Content rating, target audience, data safety, ads, app access completed
 
