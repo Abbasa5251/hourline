@@ -13,7 +13,26 @@ Closed testing build. AAB: `build-output/hourline-1.1.1.aab` (not committed).
 
 ### Google Play notes
 
-If this is the first build your testers get, use the welcome note from 1.1.0 below. Otherwise use this one:
+**First build your testers get** (1.1.0 was never uploaded, so use this one):
+
+```
+<en-US>
+Welcome to the Hourline beta!
+
+• World clock that gets daylight saving right, everywhere
+• Swipe the week strip to any date. The month shows above it
+• Drag the dial to travel through time; tap NOW to come back
+• Compare cities hour by hour to find a meeting time
+• Convert any time, including UTC
+• Clock-change alerts for the next 30 days
+• Haptic feedback on every tap
+• Open source: github.com/Abbasa5251/hourline
+
+Feedback: hello@adevtutorials.in
+</en-US>
+```
+
+**Update from 1.1.0**, if testers already had it:
 
 ```
 <en-US>
@@ -37,12 +56,11 @@ Thanks for testing! Feedback: hello@adevtutorials.in
 
 ## 1.1.0 (versionCode 6) · 14 October 2026
 
-Built for closed testing and replaced by 1.1.1. Upload 1.1.1 instead if 1.1.0 was never uploaded.
-AAB: `build-output/hourline-1.1.0.aab` (not committed).
+Built for closed testing but never uploaded: replaced by 1.1.1, and its AAB was deleted. Kept here for the history.
 
 ### Google Play notes
 
-Written as a first-beta note, because testers get the whole app for the first time.
+The first-beta welcome note, superseded by the 1.1.1 version above.
 
 ```
 <en-US>
