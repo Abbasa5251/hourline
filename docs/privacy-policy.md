@@ -23,6 +23,17 @@ the app remembers them. They never leave your phone. Uninstalling Hourline delet
 
 Hourline works entirely offline. Its time zone rules are built into the app.
 
+## Beta testing
+
+If you join the Hourline beta, you do so through **Google Groups** and **Google Play**, under
+[Google's privacy policy](https://policies.google.com/privacy). As the group's owner, the developer can see the email
+address you joined with. It is used only to give you access to the test and is never shared. Leave the group, or email
+us, to have it removed. Feedback you email us is used only to improve the app.
+
+## This website
+
+This website sets no cookies, has no analytics and loads nothing from other sites.
+
 ## Children
 
 Hourline is not directed at children under 13 and does not knowingly collect any information from anyone.

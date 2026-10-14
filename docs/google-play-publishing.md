@@ -145,8 +145,15 @@ Organization accounts skip this.
 
 1. Testing → **Closed testing** → Create track (e.g. "Beta") → **Create new release**.
 2. Upload the `.aab` from step 3 (or use `eas submit`, step 7). Release notes: `First beta of Hourline.`
-3. Testers → add an email list (12+ Google accounts) → copy the **opt-in link** and send it to them.
-4. Each tester opens the link, accepts, and installs from Play. The 14-day clock counts days with ≥12 opted-in testers.
+3. Testers: sign-ups go through a **Google Group**, so nobody has to be added by hand.
+   1. <https://groups.google.com> → **Create group** (e.g. `hourline-testers`). Who can search: *Anyone on the web*;
+      who can join: *Anyone can join*; who can view members: *Group managers*.
+   2. Play Console → Closed testing → **Testers** → *Google Groups* → add the group's email
+      (e.g. `hourline-testers@googlegroups.com`) → Save.
+   3. Share **<https://hourline.adevtutorials.in/#beta>**. It walks testers through joining the group, opting in at
+      `https://play.google.com/apps/testing/com.hourline.app` and installing. The group link lives in the first
+      step's button in [`site/index.html`](../site/index.html).
+4. Each tester joins, opts in and installs from Play. The 14-day clock counts days with ≥12 opted-in testers.
 5. Encourage testers to actually use the app and send feedback — Google reviews the test when you apply.
 6. After 14 days: Dashboard → **Apply for production** → answer the questions about your test.
 

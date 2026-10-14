@@ -3,21 +3,176 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hourline · World clock &amp; time zone converter</title>
-<meta name="description" content="Hourline is a world clock and time zone converter that gets daylight saving right, every time.">
+<title>Hourline · World clock &amp; time zone converter for Android</title>
+<meta name="description" content="Hourline is a world clock and time zone converter that gets daylight saving right, every time. Join the closed beta on Google Play.">
+<meta name="theme-color" content="#FBF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10181A" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hourline.adevtutorials.in/">
+<meta property="og:title" content="Hourline · Every time zone, any moment.">
+<meta property="og:description" content="A world clock and time zone converter that gets daylight saving right, every time. Join the Android beta.">
+<meta property="og:image" content="https://hourline.adevtutorials.in/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/icon.png">
+<link rel="preload" href="/fonts/BricolageGrotesque_700Bold.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="landing">
+<header class="top">
+  <a class="brand" href="/"><img src="/icon.png" alt="" width="36" height="36">Hourline</a>
+  <nav aria-label="Main">
+    <a href="#features">Features</a>
+    <a href="/privacy">Privacy</a>
+    <a class="pill" href="#beta">Join the beta</a>
+  </nav>
+</header>
+
 <main>
-  <a class="brand" href="/"><img src="/icon.png" alt="" width="40" height="40">Hourline</a>
-  <h1>Every time zone, any moment.</h1>
-  <p class="lead">A world clock and time zone converter for Android that gets daylight saving right, every time.
-  Compare cities, travel forward or back in time, and see clock changes before they happen.</p>
-  <ul class="links">
-    <li><a href="/privacy">Privacy policy</a></li>
-    <li><a href="mailto:hello@adevtutorials.in">Contact: hello@adevtutorials.in</a></li>
-  </ul>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">World clock · converter · meeting planner</p>
+      <h1>Every time zone, any&nbsp;moment.</h1>
+      <p class="lead">Hourline shows the time in all your cities and gets daylight saving right, every time.
+      Travel forward or back in time, find the hour that works for everyone, and see clock changes before they happen.</p>
+      <div class="cta">
+        <a class="btn" href="#beta">Join the closed beta</a>
+        <span class="small">Android · free · no ads, no tracking</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <figure class="phone"><img src="/img/02-home.webp" width="540" height="1080"
+        alt="Hourline home screen: London, Tokyo, Sydney and Dubai with their times, DST tags and a dial for time travel"></figure>
+    </div>
+  </section>
+
+  <section id="features" class="features" aria-label="Features">
+    <article class="feature">
+      <div>
+        <p class="tag coral">Time travel</p>
+        <h2>Drag the dial to any moment</h2>
+        <p>Scrub the dial or tap a day to jump into the future or the past. When clocks change in between, Hourline says so,
+        like “GMT · DST ended” for London, and moves every city with it.</p>
+      </div>
+      <figure class="phone"><img src="/img/07-time-travel.webp" width="540" height="1080" loading="lazy"
+        alt="Time travel to Monday 26 October: London is tagged GMT, DST ended, and the banner says 12 days ahead of now"></figure>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="tag lavender">Compare</p>
+        <h2>Find the hour that works</h2>
+        <p>An hour grid shows work, free and sleep hours for every city side by side, and picks the best overlap for
+        your next meeting.</p>
+      </div>
+      <figure class="phone"><img src="/img/03-compare.webp" width="540" height="1080" loading="lazy"
+        alt="Compare screen: a 24-hour grid of work, free and night hours for each city with the best overlap highlighted"></figure>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="tag apricot">Convert</p>
+        <h2>Convert any time, anywhere</h2>
+        <p>Pick a date and time in one city and see it everywhere, including UTC. Swap cities in one tap. Pick a time
+        that’s skipped when clocks spring forward and Hourline warns you instead of quietly guessing.</p>
+      </div>
+      <figure class="phone"><img src="/img/04-convert.webp" width="540" height="1080" loading="lazy"
+        alt="Convert screen: 7:19 AM in San Francisco is 3:19 PM in London, BST (UTC+1)"></figure>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="tag sage">Clock changes</p>
+        <h2>Never miss a clock change</h2>
+        <p>See exactly when the next change happens, what time it happens locally, and how the gap between your cities
+        moves afterwards.</p>
+      </div>
+      <figure class="phone"><img src="/img/05-dst-alert.webp" width="540" height="1080" loading="lazy"
+        alt="Card reading: Clocks change on Sun, Oct 25. London falls back 1 hr at 2:00 AM. After that, London will be 7 hrs ahead of San Francisco."></figure>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="tag ink">Light &amp; dark</p>
+        <h2>Easy on the eyes, day or night</h2>
+        <p>Light and dark themes that follow your phone, a 12- or 24-hour clock, and big, readable type that scales
+        with your font size.</p>
+      </div>
+      <figure class="phone"><img src="/img/08-dark.webp" width="540" height="1080" loading="lazy"
+        alt="Hourline home screen in dark mode"></figure>
+    </article>
+  </section>
+
+  <section class="facts" aria-labelledby="facts-title">
+    <h2 id="facts-title">Accurate by design</h2>
+    <p>Hourline ships its own up-to-date time zone rules, so every phone gives the same answer, whatever its software version.</p>
+    <ul>
+      <li><strong>2,200+</strong><span>cities and every time zone, searchable offline</span></li>
+      <li><strong>2026e</strong><span>IANA time zone rules built into the app</span></li>
+      <li><strong>240</strong><span>real-world conversions checked against timeanddate.com</span></li>
+      <li><strong>0</strong><span>bytes of your data collected. No account, no ads</span></li>
+    </ul>
+  </section>
+
+  <section id="beta" class="beta" aria-labelledby="beta-title">
+    <p class="eyebrow">Closed beta on Google Play</p>
+    <h2 id="beta-title">Help test Hourline</h2>
+    <p class="lead">Hourline is in closed testing before it launches on Google Play. Join in three steps. It takes about
+    two minutes.</p>
+    <ol class="steps">
+      <li>
+        <h3>Join the tester group</h3>
+        <p>Sign in with the Google account you use in Google Play on your Android phone, then tap <em>Join group</em>.</p>
+        <a class="btn" href="https://groups.google.com/g/hourline-testers" rel="noopener">Join on Google Groups</a>
+      </li>
+      <li>
+        <h3>Become a tester</h3>
+        <p>Open the testing page with the same account and tap <em>Become a tester</em>.</p>
+        <a class="btn" href="https://play.google.com/apps/testing/com.hourline.app" rel="noopener">Open testing page</a>
+      </li>
+      <li>
+        <h3>Install Hourline</h3>
+        <p>Install it from Google Play like any other app. Updates arrive automatically.</p>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.hourline.app" rel="noopener">Get it on Google Play</a>
+      </li>
+    </ol>
+    <p class="note">Please keep Hourline installed for at least <strong>14 days</strong>. Google needs that before the app can
+    go public. Found a bug or have an idea? Email <a href="mailto:hello@adevtutorials.in?subject=Hourline%20beta%20feedback">hello@adevtutorials.in</a>.</p>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title">Questions</h2>
+    <details>
+      <summary>Is Hourline free?</summary>
+      <p>Yes. No ads, no in-app purchases, no account.</p>
+    </details>
+    <details>
+      <summary>Which phones does it run on?</summary>
+      <p>Android phones from Google Play. An iPhone version is planned.</p>
+    </details>
+    <details>
+      <summary>What data do you collect?</summary>
+      <p>None. The app works offline and your cities stay on your phone. Joining the beta goes through Google Groups and
+      Google Play. See the <a href="/privacy">privacy policy</a>.</p>
+    </details>
+    <details>
+      <summary>The testing page says the app isn’t available</summary>
+      <p>Make sure you joined the group with the same Google account you use in Google Play, then reload the page. It can
+      take a few minutes after joining.</p>
+    </details>
+    <details>
+      <summary>How do I leave the beta?</summary>
+      <p>Open the <a href="https://play.google.com/apps/testing/com.hourline.app">testing page</a> and tap <em>Leave the
+      program</em>, then leave the group from Google Groups.</p>
+    </details>
+  </section>
 </main>
+
+<footer class="foot">
+  <a class="brand" href="/"><img src="/icon.png" alt="" width="28" height="28">Hourline</a>
+  <nav aria-label="Footer">
+    <a href="/privacy">Privacy policy</a>
+    <a href="mailto:hello@adevtutorials.in">hello@adevtutorials.in</a>
+  </nav>
+</footer>
 </body>
 </html>
