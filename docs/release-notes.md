@@ -7,9 +7,22 @@ Newest first. Each release has:
 
 ---
 
-## Unreleased
+## 1.1.2 (versionCode 8) · 22 October 2026
 
-### Changes
+Closed testing build. AAB: `build-output/hourline-1.1.2.aab` (not committed).
+
+### Google Play notes
+
+```
+<en-US>
+• Vancouver, Edmonton, Inuvik and Winnipeg show MST, CST and EST from 1 November, when BC, Alberta, the NWT and Manitoba stop changing clocks
+• Time zone fixes and improvements
+
+Thanks for testing! Feedback: hello@adevtutorials.in
+</en-US>
+```
+
+### Changes since 1.1.1
 
 **Fixes**
 - Vancouver, Edmonton, Inuvik and Winnipeg are labelled MST, CST and EST from 1 November 2026, when British Columbia, Alberta, the Northwest Territories and Manitoba stop changing clocks. They no longer show "PST at UTC−7" or a DST badge. Offsets were already right (tzdb 2026e), and the labels match timeanddate.com.
