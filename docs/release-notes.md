@@ -7,9 +7,9 @@ Newest first. Each release has:
 
 ---
 
-## 1.1.2 (versionCode 8) · 22 October 2026
+## 1.1.2 (versionCode 9) · 22 October 2026
 
-Closed testing build. AAB: `build-output/hourline-1.1.2.aab` (not committed).
+Closed testing build. AAB: `build-output/hourline-1.1.2.aab` (not committed). Built with `eas build --local` (the cloud build quota was used up; that failed attempt took versionCode 8). Download size 16.0–17.7 MB.
 
 ### Google Play notes
 
