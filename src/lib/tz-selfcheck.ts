@@ -23,12 +23,13 @@ export function runTzSelfCheck(): { name: string; ok: boolean; got: string }[] {
     ['abbr NPT (our list)', () => zoneAbbr('Asia/Kathmandu', BASE), 'NPT'],
     ['bundled rules active', () => typeof (Intl.DateTimeFormat as unknown as { __addTZData?: unknown }).__addTZData, 'function'],
     ['Morocco +0 since Sep 2026', () => offsetMinutes('Africa/Casablanca', Date.UTC(2026, 9, 14, 12)), 0],
+    ['tzdb 2026e: Winnipeg −5 all year', () => offsetMinutes('America/Winnipeg', Date.UTC(2027, 0, 15, 12)), -300],
   ];
   // Same timeanddate.com cross-check as tz-timeanddate.test.ts, on the device's own tz data.
-  // Known exceptions: timeanddate's Morocco Dec 2018 offset (wrong), and Morocco's DST label (naming only).
+  // Known exceptions: timeanddate's Morocco Dec 2018 offset (wrong), and Morocco's pre-2026 Ramadan label (WET).
   const tadWrong = Date.UTC(2018, 11, 1, 12);
   const offDiffs = TAD_SAMPLES.filter(([t, tz, off]) => !(tz === 'Africa/Casablanca' && t === tadWrong) && offsetMinutes(tz, t) !== off);
-  const dstDiffs = TAD_SAMPLES.filter(([t, tz, , d]) => tz !== 'Africa/Casablanca' && dstInfo(tz, t).active !== d);
+  const dstDiffs = TAD_SAMPLES.filter(([t, tz, , d]) => !(tz === 'Africa/Casablanca' && t === tadWrong) && dstInfo(tz, t).active !== d);
   const trDiffs = TAD_TRANSITIONS.filter(([tz, at, delta]) => {
     const got = nextTransition(tz, at - 3 * 86_400_000, 6);
     return !got || got.at !== at || got.delta !== delta;

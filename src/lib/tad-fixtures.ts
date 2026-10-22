@@ -243,10 +243,52 @@ export const TAD_SAMPLES: [number, string, number, boolean, string][] = [
   [Date.UTC(2026, 9, 4, 12, 0), 'Pacific/Chatham', 825, true, 'CHADT'],
   [Date.UTC(2026, 9, 4, 12, 0), 'Pacific/Kiritimati', 840, false, 'LINT'],
   [Date.UTC(2026, 9, 4, 12, 0), 'Pacific/Pago_Pago', -660, false, 'SST'],
+  // Ireland: tzdb flags winter GMT as DST (negative DST); timeanddate, like everyone else, flags summer IST.
+  [Date.UTC(2026, 0, 15, 12, 0), 'Europe/Dublin', 0, false, 'GMT'],
+  [Date.UTC(2026, 6, 15, 12, 0), 'Europe/Dublin', 60, true, 'IST'],
+  // Zones changed by tzdb 2025a–2026e, captured from timeanddate on 2026-10-22.
+  [Date.UTC(2026, 6, 1, 12, 0), 'America/Coyhaique', -180, false, 'CLST'], // 2025b: permanent −3
+  [Date.UTC(2026, 6, 1, 12, 0), 'Asia/Manila', 480, false, 'PHST'],
+  [Date.UTC(1990, 5, 15, 12, 0), 'Asia/Manila', 540, true, 'PHDT'], // 2025a: Philippine history
+  [Date.UTC(1953, 6, 1, 12, 0), 'America/Tijuana', -420, true, 'PDT'], // 2025c: Baja California 1953
+  [Date.UTC(1992, 7, 1, 12, 0), 'America/Bogota', -240, true, 'COST'], // 2026d: Colombia 1992
+  [Date.UTC(1979, 6, 1, 12, 0), 'Asia/Tehran', 270, true, 'IRDT'], // 2026d: Iran 1979
+  [Date.UTC(2026, 6, 1, 12, 0), 'Europe/Chisinau', 180, true, 'EEST'], // 2026a: Moldova
+  // Canada's permanent-time switch, captured 2026-10-22 (tzdb 2026e).
+  [Date.UTC(2026, 6, 1, 12, 0), 'America/Vancouver', -420, true, 'PDT'],
+  [Date.UTC(2026, 10, 1, 8, 59), 'America/Vancouver', -420, true, 'PDT'],
+  [Date.UTC(2026, 10, 1, 9, 0), 'America/Vancouver', -420, false, 'MST'],
+  [Date.UTC(2026, 11, 15, 12, 0), 'America/Vancouver', -420, false, 'MST'],
+  [Date.UTC(2027, 6, 1, 12, 0), 'America/Vancouver', -420, false, 'MST'],
+  [Date.UTC(2026, 6, 1, 12, 0), 'America/Edmonton', -360, true, 'MDT'],
+  [Date.UTC(2026, 10, 1, 7, 59), 'America/Edmonton', -360, true, 'MDT'],
+  [Date.UTC(2026, 10, 1, 8, 0), 'America/Edmonton', -360, false, 'CST'],
+  [Date.UTC(2026, 11, 15, 12, 0), 'America/Edmonton', -360, false, 'CST'],
+  [Date.UTC(2027, 6, 1, 12, 0), 'America/Edmonton', -360, false, 'CST'],
+  [Date.UTC(2026, 6, 1, 12, 0), 'America/Inuvik', -360, true, 'MDT'],
+  [Date.UTC(2026, 10, 1, 7, 59), 'America/Inuvik', -360, true, 'MDT'],
+  [Date.UTC(2026, 10, 1, 8, 0), 'America/Inuvik', -360, false, 'CST'],
+  [Date.UTC(2026, 11, 15, 12, 0), 'America/Inuvik', -360, false, 'CST'],
+  [Date.UTC(2027, 6, 1, 12, 0), 'America/Inuvik', -360, false, 'CST'],
+  [Date.UTC(2026, 6, 1, 12, 0), 'America/Winnipeg', -300, true, 'CDT'],
+  [Date.UTC(2026, 10, 1, 6, 59), 'America/Winnipeg', -300, true, 'CDT'],
+  [Date.UTC(2026, 10, 1, 7, 0), 'America/Winnipeg', -300, false, 'EST'],
+  [Date.UTC(2026, 11, 15, 12, 0), 'America/Winnipeg', -300, false, 'EST'],
+  [Date.UTC(2027, 6, 1, 12, 0), 'America/Winnipeg', -300, false, 'EST'],
 ];
 
 /** [zone, instant clocks change, change in minutes, abbreviation after] */
 export const TAD_TRANSITIONS: [string, number, number, string][] = [
+  // Zones changed by tzdb 2025a–2026e (past timestamps), captured from timeanddate on 2026-10-22.
+  ['Europe/Chisinau', Date.UTC(2026, 2, 29, 1), 60, 'EEST'], // 2026a: EU transition times since 2022
+  ['Europe/Chisinau', Date.UTC(2026, 9, 25, 1), -60, 'EET'],
+  ['America/Bogota', Date.UTC(1992, 4, 2, 5), 60, 'COST'], // 2026d: 00:00, not 24:00
+  ['Asia/Tehran', Date.UTC(1978, 10, 10, 20), -30, 'IRST'], // 2025b: +04 → +0330
+  ['Asia/Tehran', Date.UTC(1979, 4, 25, 20, 30), 60, 'IRDT'], // 2026d: 00:00, not 24:00
+  ['Europe/Dublin', Date.UTC(1925, 8, 20, 2), -60, 'GMT'], // 2026e: 09-20, not 10-04
+  ['America/Tijuana', Date.UTC(1953, 3, 26, 9), 60, 'PDT'], // 2025c
+  ['America/Tijuana', Date.UTC(1975, 9, 26, 9), -60, 'PST'],
+  ['Asia/Manila', Date.UTC(1990, 4, 20, 16), 60, 'PHDT'], // 2025a
   ['America/Los_Angeles', 1772964000000, 60, 'PDT'],
   ['America/Los_Angeles', 1793523600000, -60, 'PST'],
   ['America/New_York', 1772953200000, 60, 'EDT'],
