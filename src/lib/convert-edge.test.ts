@@ -51,3 +51,13 @@ test('Morocco drops to UTC+0 for Ramadan', () => {
   expect(offsetMinutes('Africa/Casablanca', Date.UTC(2026, 2, 1, 12))).toBe(0);
   expect(offsetMinutes('Africa/Casablanca', Date.UTC(2026, 3, 1, 12))).toBe(60);
 });
+
+// Luxon's fromObject seeds ambiguous times with the zone's offset *now*, so these flipped with the season.
+test.each(['2026-01-15T12:00Z', '2026-07-15T12:00Z'])('fall-back times resolve the same whenever the app runs (%s)', (now) => {
+  jest.useFakeTimers({ now: new Date(now) });
+  expect(zonedToInstant('America/Los_Angeles', 2026, 11, 1, 1, 30)).toBe(Date.UTC(2026, 10, 1, 8, 30));
+  expect(zonedToInstant('Australia/Sydney', 2026, 4, 5, 2, 30)).toBe(Date.UTC(2026, 3, 4, 15, 30));
+  expect(isNonexistent('America/Los_Angeles', 2026, 3, 8, 2, 30)).toBe(true);
+  jest.useRealTimers();
+});
+

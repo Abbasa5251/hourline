@@ -1,85 +1,38 @@
-// Common zone abbreviations (timeanddate.com naming), keyed by zone then UTC offset in minutes.
-// Keyed by offset rather than a DST flag so zones like Morocco (Ramadan +0, otherwise +1 until Sep 2026) label
-// correctly. Zones not listed fall back to CLDR's English name, then to "UTC±h".
-const EUROPE_CENTRAL = { 60: 'CET', 120: 'CEST' };
-const EUROPE_EAST = { 120: 'EET', 180: 'EEST' };
-const AU_EAST = { 600: 'AEST', 660: 'AEDT' };
+// timeanddate.com's names for abbreviations tzdb writes differently, keyed by zone then tzdb's abbreviation.
+// tzdb only records abbreviations in common English use and writes "+0545" for the rest; everything it does name
+// (PDT, CET, IST, AEST, …) comes straight from the bundled data, so rule changes relabel themselves on a bump.
+// Keyed by tzdb's abbreviation, not the offset, so Istanbul is EEST in summer 2015 and TRT once tzdb says "+03".
+const CHILE = { '-04': 'CLT', '-03': 'CLST' };
+const INDOCHINA = { '+07': 'ICT' };
 
-export const ABBR: Record<string, Record<number, string>> = {
+export const ABBR: Record<string, Record<string, string>> = {
   // Americas
-  'America/St_Johns': { [-210]: 'NST', [-150]: 'NDT' },
-  'America/Halifax': { [-240]: 'AST', [-180]: 'ADT' },
-  'America/Mexico_City': { [-360]: 'CST', [-300]: 'CDT' },
-  'America/Sao_Paulo': { [-180]: 'BRT', [-120]: 'BRST' },
-  'America/Argentina/Buenos_Aires': { [-180]: 'ART' },
-  'America/Santiago': { [-240]: 'CLT', [-180]: 'CLST' },
-  'America/Bogota': { [-300]: 'COT' },
-  'America/Lima': { [-300]: 'PET' },
-  'America/Caracas': { [-240]: 'VET' },
-  'Pacific/Honolulu': { [-600]: 'HST' },
+  'America/Sao_Paulo': { '-03': 'BRT', '-02': 'BRST' },
+  'America/Argentina/Buenos_Aires': { '-03': 'ART' },
+  'America/Santiago': CHILE,
+  'America/Coyhaique': CHILE, // timeanddate keeps CLST for Aysén's permanent −3 (2025)
+  'America/Bogota': { '-05': 'COT', '-04': 'COST' },
+  'America/Lima': { '-05': 'PET' },
+  'America/Caracas': { '-04': 'VET', '-0430': 'VET' },
   // Europe
-  'Europe/London': { 0: 'GMT', 60: 'BST' },
-  'Europe/Dublin': { 0: 'GMT', 60: 'IST' },
-  'Europe/Lisbon': { 0: 'WET', 60: 'WEST' },
-  'Europe/Paris': EUROPE_CENTRAL,
-  'Europe/Berlin': EUROPE_CENTRAL,
-  'Europe/Madrid': EUROPE_CENTRAL,
-  'Europe/Rome': EUROPE_CENTRAL,
-  'Europe/Amsterdam': EUROPE_CENTRAL,
-  'Europe/Brussels': EUROPE_CENTRAL,
-  'Europe/Vienna': EUROPE_CENTRAL,
-  'Europe/Zurich': EUROPE_CENTRAL,
-  'Europe/Stockholm': EUROPE_CENTRAL,
-  'Europe/Oslo': EUROPE_CENTRAL,
-  'Europe/Copenhagen': EUROPE_CENTRAL,
-  'Europe/Warsaw': EUROPE_CENTRAL,
-  'Europe/Prague': EUROPE_CENTRAL,
-  'Europe/Budapest': EUROPE_CENTRAL,
-  'Europe/Athens': EUROPE_EAST,
-  'Europe/Helsinki': EUROPE_EAST,
-  'Europe/Kyiv': EUROPE_EAST,
-  'Europe/Bucharest': EUROPE_EAST,
-  'Europe/Istanbul': { 180: 'TRT' },
-  'Europe/Moscow': { 180: 'MSK' },
+  'Europe/Istanbul': { '+03': 'TRT' },
   // Africa & Middle East
   // UTC+0 is named GMT since the permanent switch on 2026-09-20 (timeanddate said WET for earlier Ramadan +0).
-  'Africa/Casablanca': { 0: 'GMT', 60: 'WEST' },
-  'Africa/Cairo': EUROPE_EAST,
-  'Africa/Lagos': { 60: 'WAT' },
-  'Africa/Nairobi': { 180: 'EAT' },
-  'Africa/Johannesburg': { 120: 'SAST' },
-  'Asia/Dubai': { 240: 'GST' },
-  'Asia/Riyadh': { 180: 'AST' },
-  'Asia/Tehran': { 210: 'IRST', 270: 'IRDT' },
-  'Asia/Jerusalem': { 120: 'IST', 180: 'IDT' },
+  'Africa/Casablanca': { '+00': 'GMT', '+01': 'WEST' },
+  'Asia/Dubai': { '+04': 'GST' },
+  'Asia/Riyadh': { '+03': 'AST' },
+  'Asia/Tehran': { '+0330': 'IRST', '+0430': 'IRDT' },
   // Asia
-  'Asia/Karachi': { 300: 'PKT' },
-  'Asia/Kolkata': { 330: 'IST' },
-  'Asia/Kathmandu': { 345: 'NPT' },
-  'Asia/Dhaka': { 360: 'BST' },
-  'Asia/Bangkok': { 420: 'ICT' },
-  'Asia/Ho_Chi_Minh': { 420: 'ICT' },
-  'Asia/Jakarta': { 420: 'WIB' },
-  'Asia/Singapore': { 480: 'SGT' },
-  'Asia/Kuala_Lumpur': { 480: 'MYT' },
-  'Asia/Manila': { 480: 'PHT' },
-  'Asia/Hong_Kong': { 480: 'HKT' },
-  'Asia/Shanghai': { 480: 'CST' },
-  'Asia/Taipei': { 480: 'CST' },
-  'Asia/Seoul': { 540: 'KST' },
-  'Asia/Tokyo': { 540: 'JST' },
+  'Asia/Kathmandu': { '+0545': 'NPT' },
+  'Asia/Dhaka': { '+06': 'BST' },
+  'Asia/Bangkok': INDOCHINA,
+  'Asia/Ho_Chi_Minh': INDOCHINA,
+  'Asia/Singapore': { '+08': 'SGT' },
+  'Asia/Kuala_Lumpur': { '+08': 'MYT' },
+  'Asia/Manila': { PST: 'PHST', PDT: 'PHDT' },
   // Oceania
-  'Australia/Sydney': AU_EAST,
-  'Australia/Melbourne': AU_EAST,
-  'Australia/Hobart': AU_EAST,
-  'Australia/Brisbane': { 600: 'AEST' },
-  'Australia/Adelaide': { 570: 'ACST', 630: 'ACDT' },
-  'Australia/Darwin': { 570: 'ACST' },
-  'Australia/Perth': { 480: 'AWST' },
-  'Australia/Lord_Howe': { 630: 'LHST', 660: 'LHDT' },
-  'Pacific/Auckland': { 720: 'NZST', 780: 'NZDT' },
-  'Pacific/Chatham': { 765: 'CHAST', 825: 'CHADT' },
-  'Pacific/Fiji': { 720: 'FJT' },
-  'Pacific/Kiritimati': { 840: 'LINT' },
-  'Pacific/Pago_Pago': { [-660]: 'SST' },
+  'Australia/Lord_Howe': { '+1030': 'LHST', '+11': 'LHDT' },
+  'Pacific/Chatham': { '+1245': 'CHAST', '+1345': 'CHADT' },
+  'Pacific/Fiji': { '+12': 'FJT', '+13': 'FJST' },
+  'Pacific/Kiritimati': { '+14': 'LINT' },
 };

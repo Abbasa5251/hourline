@@ -7,6 +7,20 @@ Newest first. Each release has:
 
 ---
 
+## Unreleased
+
+### Changes
+
+**Fixes**
+- Vancouver, Edmonton, Inuvik and Winnipeg are labelled MST, CST and EST from 1 November 2026, when British Columbia, Alberta, the Northwest Territories and Manitoba stop changing clocks. They no longer show "PST at UTC−7" or a DST badge. Offsets were already right (tzdb 2026e), and the labels match timeanddate.com.
+- A time that happens twice when clocks fall back (1:30 AM on 1 November in Los Angeles) always converts to the first occurrence. Before, the answer depended on the season the app was opened in.
+- Zone abbreviations and the DST badge now come from the bundled IANA data, so future rule changes relabel themselves. This also fixes labels for Havana, Chisinau, Beirut, Whitehorse, Istanbul before 2016, Manila (PHST), Coyhaique and Fiji, and the DST badge for Morocco and Egypt.
+
+**Project**
+- Every transition timeanddate.com lists for 76 major cities in 2010–2029 (1,781 changes, about 108,000 conversions around them) was compared against the app. The only differences are Lebanon's disputed March 2023 start and labels timeanddate has that tzdb doesn't (Paraguay, Samoa).
+
+---
+
 ## 1.1.1 (versionCode 7) · 14 October 2026
 
 Closed testing build. AAB: `build-output/hourline-1.1.1.aab` (not committed).

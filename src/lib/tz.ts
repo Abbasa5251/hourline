@@ -22,8 +22,6 @@ const HOUR = 3_600_000;
 const DAY = 86_400_000;
 
 const at = (tz: string, t: number) => DateTime.fromMillis(t, { zone: tz, locale: 'en-US' });
-const wall = (tz: string, y: number, mo: number, d: number, h: number, mi: number) =>
-  DateTime.fromObject({ year: y, month: mo, day: d, hour: h, minute: mi }, { zone: tz, locale: 'en-US' });
 
 // The bundled Intl polyfill costs ~2.5 ms per lookup on a phone, and screens make hundreds. Offsets only change at
 // clock changes, so cache Luxon's answer per zone for a whole UTC day, then per 15-minute window — each only when
@@ -57,28 +55,68 @@ export function parts(tz: string, t: number): Parts {
 }
 
 /**
- * Instant for a wall-clock time in `tz`. Luxon resolves times skipped by spring-forward by
- * shifting forward (2:30 → 3:30) and ambiguous fall-back times to the earlier instant.
+ * The instant a wall-clock time names in `tz`, read with the offset from a day before and a day after (no zone
+ * changes clocks twice in two days). Not Luxon's fromObject: it seeds with the zone's offset *now*, so an ambiguous
+ * fall-back time resolved to a different instant depending on the season the app was opened in.
+ */
+function resolveWall(tz: string, y: number, mo: number, d: number, h: number, mi: number) {
+  const local = Date.UTC(y, mo - 1, d, h, mi);
+  const before = offsetMinutes(tz, local - DAY);
+  const after = offsetMinutes(tz, local + DAY);
+  const fits = [before, after].filter((o) => offsetMinutes(tz, local - o * MIN) === o).map((o) => local - o * MIN);
+  return fits.length ? { t: Math.min(...fits), exists: true } : { t: local - before * MIN, exists: false };
+}
+
+/**
+ * Instant for a wall-clock time in `tz`. Times skipped by spring-forward shift forward (2:30 → 3:30);
+ * ambiguous fall-back times resolve to the earlier instant.
  */
 export function zonedToInstant(tz: string, y: number, mo: number, d: number, h: number, mi: number): number {
-  return wall(tz, y, mo, d, h, mi).toMillis();
+  return resolveWall(tz, y, mo, d, h, mi).t;
 }
 
 /** True when the wall time never happens in `tz` (skipped by spring-forward). */
 export function isNonexistent(tz: string, y: number, mo: number, d: number, h: number, mi: number): boolean {
-  const dt = wall(tz, y, mo, d, h, mi);
-  return dt.day !== d || dt.hour !== h || dt.minute !== mi;
+  return !resolveWall(tz, y, mo, d, h, mi).exists;
 }
 
-/** Whether `tz` observes DST in t's year, and whether it's in effect at `t`. */
+// tzdb's own record per period, as bundled in the FormatJS polyfill: [start (s), abbreviation, offset (s), isDST].
+type Period = [number, string, number, boolean];
+const tzdb = () => (Intl.DateTimeFormat as unknown as { tzData: Record<string, Period[] | undefined> }).tzData;
+
+/** Index of the tzdb period in effect at `t`, found the way FormatJS finds it. */
+function periodIndex(z: Period[], t: number): number {
+  const i = z.findIndex((p) => p[0] * 1000 > t);
+  return (i < 0 ? z.length : i) - 1;
+}
+
+function period(tz: string, t: number): Period | undefined {
+  const z = tzdb()[tz];
+  return z && z[periodIndex(z, t)];
+}
+
+/**
+ * Whether `tz` observes DST in t's year, and whether it's in effect at `t` — from tzdb's own flag, so a zone that
+ * stops changing clocks on its summer offset (Vancouver keeps −7 from Nov 2026) reads as standard time.
+ * tzdb flags Ireland's and Morocco's *lower* offset as DST (negative DST); everyone else, timeanddate included,
+ * calls the higher one DST, so a flagged period below an unflagged neighbour swaps roles with it.
+ */
 export function dstInfo(tz: string, t: number) {
   const dt = at(tz, t);
-  const jan = dt.set({ month: 1, day: 1 }).offset;
-  const jul = dt.set({ month: 7, day: 1 }).offset;
-  const observes = jan !== jul;
-  // Not Luxon's isInDST: it compares against May, which is still DST in some southern-hemisphere years
-  // (Chile 2018 ran DST to May 13), so it reported Santiago in Dec 2018 as standard time.
-  return { observes, active: observes && dt.offset === Math.max(jan, jul) };
+  const observes = dt.set({ month: 1, day: 1 }).offset !== dt.set({ month: 7, day: 1 }).offset;
+  const z = tzdb()[tz];
+  if (!z) return { observes, active: false };
+  const i = periodIndex(z, t);
+  const [, , off, flag] = z[i];
+  // FormatJS repeats each period one second before the next change, so step past same-offset entries.
+  const near = (step: number) => {
+    let j = i + step;
+    while (z[j] && z[j][2] === off) j += step;
+    return z[j];
+  };
+  const neighbours = [near(-1), near(1)].filter((p): p is Period => !!p);
+  const active = flag ? !neighbours.some((p) => !p[3] && p[2] > off) : neighbours.some((p) => p[3] && p[2] < off);
+  return { observes, active };
 }
 
 /** Next offset change after `t` within `days`, to the minute. Luxon has no transition API, so scan. */
@@ -137,12 +175,16 @@ export function utcLabel(offset: number): string {
   return `UTC${offset > 0 ? '+' : '−'}${Math.floor(a / 60)}${m ? `:${String(m).padStart(2, '0')}` : ''}`;
 }
 
-/** Short zone name like "PDT", "IST", "NPT"; null when neither our list nor CLDR has one (caller shows UTC±h). */
+/**
+ * Short zone name like "PDT", "IST", "NPT": tzdb's own abbreviation, renamed by our list where timeanddate differs,
+ * then CLDR's. null when none has one (caller shows UTC±h).
+ */
 export function zoneAbbr(tz: string, t: number): string | null {
-  const dt = at(tz, t);
-  const own = ABBR[tz]?.[dt.offset];
+  const iana = period(tz, t)?.[1];
+  const own = iana && ABBR[tz]?.[iana];
   if (own) return own;
-  const name = dt.offsetNameShort;
+  if (iana && /^[A-Z]/.test(iana)) return iana; // tzdb writes "+0545" where no abbreviation is in common use
+  const name = at(tz, t).offsetNameShort;
   return name && !/^(GMT|UTC)[+-]/.test(name) ? name : null;
 }
 
